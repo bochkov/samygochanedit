@@ -1,3 +1,9 @@
+**Version 0.5**
+
+- forked
+- moved from swt to swing
+- added gradle
+
 **Version 0.42**
 
 -   added dynamic menus showing only currently available options

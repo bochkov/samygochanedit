@@ -37,11 +37,11 @@ First, you need to export your channels to something editable.
 
 With TV on:
 
- - Insert an usb on tv. press ![vol down](src/main/resources/img/Volume_down_key.png) and release
- - Press ![enter](src/main/resources/img/Enter_key.png) button for 10 seconds.
+ - Insert an usb on tv. press ![vol down](src/test/resources/img/Volume_down_key.png) and release
+ - Press ![enter](src/test/resources/img/Enter_key.png) button for 10 seconds.
  - You will see a hide menu to export configuration to usb
 
-<img src="src/main/resources/img/Channel_Import_Export.png" alt="hidden import/export menu" style="width: 400px;"/>
+<img src="src/test/resources/img/Channel_Import_Export.png" alt="hidden import/export menu" style="width: 400px;"/>
 
  - Choose **tv to usb** A set of files will be saved to a directory named after your firmware name *TCHLDEUC* or the like.
  - Extract usb and insert on your system

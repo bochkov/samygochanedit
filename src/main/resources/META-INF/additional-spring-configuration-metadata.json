@@ -1,0 +1,29 @@
+{
+  "groups": [
+    {
+      "name": "samygo"
+    }
+  ],
+  "properties": [
+    {
+      "name": "temp-dir",
+      "type": "java.io.File",
+      "description": "Use own temporary dir, instead used system default."
+    },
+    {
+      "name": "chan-file",
+      "type": "java.io.File",
+      "description": "Use channel file."
+    },
+    {
+      "name": "scm-file",
+      "type": "java.io.File",
+      "description": "Use scm channel file."
+    },
+    {
+      "name": "scm-version",
+      "type": "java.lang.Character",
+      "description": "Use scm version at startup."
+    }
+  ]
+}

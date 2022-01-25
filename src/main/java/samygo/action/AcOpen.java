@@ -12,7 +12,6 @@ import samygo.infra.AppProps;
 import samygo.infra.ChannelServResolve;
 import samygo.model.Channel;
 import samygo.service.ChannelParser;
-import samygo.service.ScmExtractor;
 import samygo.util.FileFilters;
 
 @Slf4j
@@ -27,7 +26,7 @@ public final class AcOpen extends AcOpenSave {
     private ChannelServResolve servResolve;
 
     public AcOpen() {
-        super("&Open...");
+        super("Open...");
     }
 
     @Override
@@ -36,7 +35,6 @@ public final class AcOpen extends AcOpenSave {
             actionPerformed();
         } catch (IOException ex) {
             LOG.warn(ex.getMessage(), ex);
-            // statusUpdate(Main.LOG_INFO, "Open: )
         }
     }
 

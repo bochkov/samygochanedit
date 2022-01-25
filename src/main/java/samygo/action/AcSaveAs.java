@@ -9,32 +9,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import samygo.infra.AppProps;
 import samygo.infra.ChannelServResolve;
+import samygo.infra.FilesListener;
 import samygo.util.FileFilters;
 
 @Slf4j
 @Component
-public final class AcSaveAs extends AcOpenSave {
+public final class AcSaveAs extends AcOpenSave implements FilesListener {
 
-    @Autowired
-    private AppProps props;
+    private final AppProps props;
+
     @Autowired
     private ChannelServResolve channels;
 
-    public AcSaveAs() {
+    public AcSaveAs(AppProps props) {
         super("Save As...");
+        this.props = props;
+        this.props.addFilesListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        File spath = selectFileToSave("Save File as", FileFilters.ALL_FILTERS, props.getTempDir());
-        if (spath == null) {
-            return;
+        if (props.getChanFile() != null) {
+            File file = selectFileToSave("Save File as", FileFilters.ALL_FILTERS, props.getTempDir());
+            if (file != null) {
+                try {
+                    channels.service().writeTo(file);
+                    LOG.info("File saved as: {}", file);
+                } catch (IOException ex) {
+                    LOG.warn(ex.getMessage());
+                }
+            }
         }
-        try {
-            channels.service().writeTo(props.getChanFile());
-            LOG.info("File saved as: {}", props.getChanFile());
-        } catch (IOException ex) {
-            LOG.warn(ex.getMessage());
-        }
+    }
+
+    @Override
+    public void fileChanged() {
+        setEnabled(props.getChanFile() != null);
     }
 }

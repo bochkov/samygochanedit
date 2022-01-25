@@ -10,13 +10,14 @@ import samygo.model.Channel;
 import samygo.service.channels.ChannelService;
 
 @Component
+@UseTableContent
 public final class ChanFavDel extends AbstractAction implements Command {
 
     @Autowired
     private ChannelServResolve servResolve;
 
     public ChanFavDel() {
-        super("Remove from favourites");
+        super("Remove from favorites");
     }
 
     @Override

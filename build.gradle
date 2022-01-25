@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -34,4 +36,23 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('bootRun') {
+    jvmArgs += [
+            '-Xms64m',
+            '-Xmx128m',
+            '-Dfile.encoding=UTF-8'
+    ]
+    if (targetCompatibility.isCompatibleWith(JavaVersion.VERSION_1_9)) {
+        jvmArgs += [
+                '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+        ]
+    }
+    if (Os.isFamily(Os.FAMILY_MAC)) {
+        if (targetCompatibility.isCompatibleWith(JavaVersion.VERSION_17)) {
+            jvmArgs += ['-Dsun.java2d.metal=true']
+        }
+        jvmArgs += ['-Xdock:name=SamyGo Channel Editor']
+    }
 }

@@ -9,20 +9,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import samygo.infra.AppProps;
 import samygo.infra.ChannelServResolve;
+import samygo.infra.FilesListener;
 import samygo.util.FileFilters;
 import samygo.util.Zip;
 
 @Slf4j
 @Component
-public final class AcSaveScm extends AcOpenSave {
+public final class AcSaveScm extends AcOpenSave implements FilesListener {
 
-    @Autowired
-    private AppProps props;
+    private final AppProps props;
+
     @Autowired
     private ChannelServResolve channels;
 
-    public AcSaveScm() {
-        super("S&CM Save");
+    public AcSaveScm(AppProps props) {
+        super("&Save scm...");
+        this.props = props;
+        this.props.addFilesListener(this);
     }
 
     @Override
@@ -43,7 +46,6 @@ public final class AcSaveScm extends AcOpenSave {
             channels.service().writeTo(props.getChanFile());
             LOG.info("File {} saved.", props.getChanFile());
         }
-
         if (props.getScmFile() != null) {
             File scm = selectFileToSave("Save SCM as", FileFilters.SCM_FILTERS, props.getScmFile());
             if (scm == null)
@@ -54,5 +56,10 @@ public final class AcSaveScm extends AcOpenSave {
                 throw new IOException("scmFile " + props.getScmFile() + " not saved!");
             LOG.info("SCM-File saved as: {}", props.getScmFile());
         }
+    }
+
+    @Override
+    public void fileChanged() {
+        setEnabled(props.getScmFile() != null);
     }
 }

@@ -1,6 +1,7 @@
 package samygo.frm;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.util.Map;
 import javax.swing.*;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.miginfocom.swing.MigLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import samygo.action.AcClose;
 import samygo.infra.Mode;
 import samygo.infra.ModeKeep;
 import samygo.model.AirCableChannel;
@@ -36,7 +38,7 @@ public final class Edit extends JDialog implements EditFrm {
 
     private final JCheckBox encCheck = new JCheckBox("Encrypted");
     private final JCheckBox lockCheck = new JCheckBox("Locked");
-    private final JCheckBox favCheck = new JCheckBox("Favourite");
+    private final JCheckBox favCheck = new JCheckBox("Favorite");
     private final JCheckBox fav1Check = new JCheckBox("Fav1");
     private final JCheckBox fav2Check = new JCheckBox("Fav2");
     private final JCheckBox fav3Check = new JCheckBox("Fav3");
@@ -57,20 +59,28 @@ public final class Edit extends JDialog implements EditFrm {
     @Autowired
     private Map<String, ChannelService> services;
     private final ModeKeep modeKeep;
+    private final JFrame owner;
 
     private Channel saveChannel;
 
-    public Edit(ModeKeep modeKeep) {
-        super();
+    public Edit(JFrame owner, ModeKeep modeKeep) {
+        super(owner, "", ModalityType.APPLICATION_MODAL);
         this.modeKeep = modeKeep;
-        setModalityType(ModalityType.APPLICATION_MODAL);
+        this.owner = owner;
         createGUI();
         pack();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(this.owner);
+        setResizable(false);
+
+        getRootPane()
+                .getActionMap().put("exitAction", new AcClose(this));
+        getRootPane()
+                .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "exitAction");
     }
 
     private void createGUI() {
-        setLayout(new MigLayout("flowy, fillx"));
+        setLayout(new MigLayout("flowy, fillx", "fill, grow"));
         // region mainPanel
         JPanel mainPanel = new JPanel(new MigLayout("fillx, wrap 2", "[][fill, grow]"));
         mainPanel.add(new JLabel("Name:"));
@@ -111,10 +121,10 @@ public final class Edit extends JDialog implements EditFrm {
         miscPanel.add(favCheck);
         add(miscPanel);
         // endregion
-        // region favourites79
+        // region favorites79
         if ((modeKeep.currentMode().mask() & (Channel.TYPE_AIR | Channel.TYPE_CABLE | Channel.TYPE_SAT)) != 0) {
             JPanel x79Panel = new JPanel();
-            x79Panel.setBorder(BorderFactory.createTitledBorder("Favourites (x79)"));
+            x79Panel.setBorder(BorderFactory.createTitledBorder("Favorites (x79)"));
             x79Panel.add(fav1Check);
             x79Panel.add(fav2Check);
             x79Panel.add(fav3Check);
@@ -159,7 +169,7 @@ public final class Edit extends JDialog implements EditFrm {
         grp.add(qam246);
         grpPanel.add(qam246);
 
-        panel.add(grpPanel);
+        panel.add(grpPanel, "span 2, grow");
     }
 
     private void editAir(JPanel panel) {
@@ -220,6 +230,14 @@ public final class Edit extends JDialog implements EditFrm {
             satField.setText(String.valueOf(c.sat));
             tpField.setText(String.valueOf(c.tpid));
         }
+    }
+
+    @Override
+    public void setVisible(boolean b) {
+        if (b) {
+            setLocationRelativeTo(owner);
+        }
+        super.setVisible(b);
     }
 
     private final class DoEdit extends AbstractAction {

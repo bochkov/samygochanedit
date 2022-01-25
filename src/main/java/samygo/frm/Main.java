@@ -15,11 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import samygo.action.Command;
 import samygo.infra.AppProps;
-import samygo.infra.ChannelServResolve;
-import samygo.ui.HMenu;
-import samygo.ui.HMenuBar;
-import samygo.ui.HMenuItem;
-import samygo.ui.QTableSearch;
+import samygo.infra.ModeKeep;
+import samygo.ui.*;
 
 /**
  * The Main class does create the application and controls all interaction
@@ -30,14 +27,10 @@ public final class Main extends JFrame {
 
     private static final int WIDTH = 820;
     private static final int HEIGHT = 500;
-    private static final int META_KEY = System.getProperty("os.name").toLowerCase().contains("mac") ?
-            InputEvent.META_DOWN_MASK :
-            InputEvent.CTRL_DOWN_MASK;
+    private static final int META_KEY = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
 
     private final AppProps props;
 
-    @Autowired
-    private ChannelServResolve servResolve;
     @Autowired
     private JTable mainTable;
     @Autowired
@@ -46,14 +39,17 @@ public final class Main extends JFrame {
     private JLabel modeLabel;
     @Autowired
     private JLabel statusLabel;
+    @Autowired
+    private ModeKeep modeKeep;
 
     public Main(@Autowired AppProps props) {
         this.props = props;
         LOG.info("{}", props);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(Images.LOGO.getImage());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setTitle("SamyGO Channel Editor " + props.version());
-        setLayout(new MigLayout("wrap, fill", "fill, grow", "[][fill, grow][]"));
+        setLayout(new MigLayout("wrap, fill, insets 5", "fill, grow", "[][fill, grow][]"));
     }
 
     @PostConstruct
@@ -68,12 +64,12 @@ public final class Main extends JFrame {
                                         new HMenuItem(commands.get("newSate"))
                                 ),
                                 new HMenuItem("---"),
-                                new HMenuItem(commands.get("acOpen"), KeyStroke.getKeyStroke(KeyEvent.VK_O, META_KEY)),
-                                new HMenuItem(commands.get("acSave"), KeyStroke.getKeyStroke(KeyEvent.VK_S, META_KEY)),
-                                new HMenuItem(commands.get("acSaveAs")),
+                                new HMenuItem(commands.get("acOpenScm"), KeyStroke.getKeyStroke(KeyEvent.VK_O, META_KEY)),
+                                new HMenuItem(commands.get("acSaveScm"), KeyStroke.getKeyStroke(KeyEvent.VK_S, META_KEY)),
                                 new HMenuItem("---"),
-                                new HMenuItem(commands.get("acOpenScm"), KeyStroke.getKeyStroke(KeyEvent.VK_P, META_KEY)),
-                                new HMenuItem(commands.get("acSaveScm"), KeyStroke.getKeyStroke(KeyEvent.VK_C, META_KEY)),
+                                new HMenuItem(commands.get("acOpen")),
+                                new HMenuItem(commands.get("acSave")),
+                                new HMenuItem(commands.get("acSaveAs")),
                                 new HMenuItem("---"),
                                 new HMenuItem(commands.get("acExit"))
                         ),
@@ -107,15 +103,29 @@ public final class Main extends JFrame {
                 )
         );
         // endregion
+        HPopupMenu popupMenu = new HPopupMenu(
+                new HMenuItem(commands.get("chanAdd")),
+                new HMenuItem("---"),
+                new HMenuItem(commands.get("chanEdit")),
+                new HMenuItem(commands.get("chanMove")),
+                new HMenuItem(commands.get("chanDel")),
+                new HMenuItem("---"),
+                new HMenuItem(commands.get("chanFavAdd")),
+                new HMenuItem(commands.get("chanFavDel")),
+                new HMenuItem("---"),
+                new HMenuItem(commands.get("chanLockAdd")),
+                new HMenuItem(commands.get("chanLockDel"))
+        );
 
+        mainTable.setComponentPopupMenu(popupMenu);
         mainTable.setFillsViewportHeight(true);
         mainTable.setShowGrid(true);
         mainTable.setRowSelectionAllowed(true);
         mainTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         // TODO drag'n'drop
-        // TODO selections in table
+        mainTable.setSelectionModel(new UseTableSelectionModel(commands, modeKeep));
 
-        JPanel statusPanel = new JPanel(new MigLayout("fillx, wrap 2", "fill, grow"));
+        JPanel statusPanel = new JPanel(new MigLayout("fillx, wrap 2, insets 0", "fill, grow"));
         statusLabel.setText("Ready.");
         modeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         statusPanel.add(statusLabel);
@@ -132,7 +142,15 @@ public final class Main extends JFrame {
         pack();
         setLocationRelativeTo(null);
 
-        mainTable.setModel(servResolve.service().model());
+        commands.get("newCable").actionPerformed(null); // set model into table
         statusLabel.setText("Version: " + props.version() + " started with scmVersion: " + props.getScmVersion());
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        if (visible) {
+            mainTable.requestFocusInWindow();
+        }
+        super.setVisible(visible);
     }
 }

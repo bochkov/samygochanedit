@@ -2,8 +2,8 @@ package samygo.infra;
 
 public enum Mode {
 
-    AIR("airChannels", (byte) 0x02, "Mode: map-AirD"),
     CABLE("cableChannels", (byte) 0x01, "Mode: map-CableD"),
+    AIR("airChannels", (byte) 0x02, "Mode: map-AirD"),
     SAT("satChannels", (byte) 0x04, "Mode: map-SateD"),
     CLONE("cloneChannels", (byte) 0x08, "Mode: CLONE.BIN");
 

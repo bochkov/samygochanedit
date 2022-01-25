@@ -12,7 +12,10 @@ public final class HPopupMenu extends JPopupMenu {
 
     public HPopupMenu(Collection<JMenuItem> items) {
         for (JMenuItem item : items) {
-            add(item);
+            if (item.getText().equals("---"))
+                this.addSeparator();
+            else
+                this.add(item);
         }
     }
 }

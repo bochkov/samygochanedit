@@ -23,9 +23,9 @@ public final class QTableSearch<T extends TableModel> extends JPanel implements 
 
     public QTableSearch(TableRowSorter<T> sorter) {
         setLayout(new MigLayout("fillx, insets 0", "[][fill, grow][]"));
-        add(new JLabel("Search:"));
+        add(new JLabel(Images.SEARCH));
         add(textField);
-        JButton clear = new JButton("Clear");
+        JButton clear = new JButton(Images.CLEAR_FIELDS);
         clear.addActionListener(l -> textField.setText(""));
         add(clear);
         textField.getDocument().addDocumentListener(this);

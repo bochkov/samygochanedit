@@ -11,7 +11,7 @@ public final class HMenu extends JMenu {
     }
 
     public HMenu(String title, Collection<MenuElement> items) {
-        setText(title);
+        new Mnemo(title).setup(this);
         for (MenuElement item : items) {
             if (item instanceof JMenu menu) {
                 add(menu);

@@ -91,8 +91,10 @@ public abstract class TreeChannels implements ChannelService {
         }
         model().setAll(channels.values());
         model().applyTo(table);
-        for (int row : selectedRows) {
-            table.getSelectionModel().addSelectionInterval(row, row);
+        if (!channels.isEmpty()) {
+            for (int row : selectedRows) {
+                table.getSelectionModel().addSelectionInterval(row, row);
+            }
         }
     }
 
@@ -116,8 +118,10 @@ public abstract class TreeChannels implements ChannelService {
         table.getSelectionModel().clearSelection();
         model().setAll(channels.values());
         model().applyTo(table);
-        for (int row : selected) {
-            table.getSelectionModel().addSelectionInterval(row, row);
+        if (!channels.isEmpty()) {
+            for (int row : selected) {
+                table.getSelectionModel().addSelectionInterval(row, row);
+            }
         }
     }
 

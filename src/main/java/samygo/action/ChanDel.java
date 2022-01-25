@@ -10,6 +10,7 @@ import samygo.infra.ChannelServResolve;
 
 @Slf4j
 @Component
+@UseTableContent
 public final class ChanDel extends AbstractAction implements Command {
 
     @Autowired

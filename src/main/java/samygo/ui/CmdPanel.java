@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public final class CmdPanel extends JPanel {
 
-    private static final String DEFAULT_CAPABLE = "DEFAULT_CAPABLE";
+    public static final String DEFAULT_CAPABLE = "DEFAULT_CAPABLE";
 
     public CmdPanel(JRootPane rootPane, JButton... buttons) {
         this(rootPane, new FlowLayout(FlowLayout.CENTER), buttons);

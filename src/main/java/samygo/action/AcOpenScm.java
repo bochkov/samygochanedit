@@ -29,7 +29,7 @@ public final class AcOpenScm extends AcOpenSave {
     private ChannelServResolve servResolve;
 
     public AcOpenScm() {
-        super("SCM O&pen");
+        super("&Open scm...");
     }
 
     @Override

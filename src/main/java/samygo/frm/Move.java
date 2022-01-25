@@ -1,6 +1,7 @@
 package samygo.frm;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.util.SortedMap;
 import javax.swing.*;
@@ -9,8 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.miginfocom.swing.MigLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import samygo.action.AcClose;
 import samygo.infra.ChannelServResolve;
 import samygo.model.Channel;
+import samygo.service.ChannelCreator;
 import samygo.service.channels.ChannelService;
 import samygo.ui.CmdPanel;
 import samygo.ui.IntTextField;
@@ -24,36 +27,44 @@ public final class Move extends JDialog implements Frm {
     @Autowired
     private ChannelCreator channelCreator;
 
+    private final JFrame owner;
     private final JTextField startField = new IntTextField();
     private final JButton moveButton = new JButton(new DoMove());
 
-    public Move() {
-        super();
-        setModalityType(ModalityType.APPLICATION_MODAL);
-        setTitle("Move Channel(s)");
+    public Move(JFrame owner) {
+        super(owner, "Move Channel(s)", ModalityType.APPLICATION_MODAL);
+        this.owner = owner;
         createGUI();
         pack();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(this.owner);
+        setResizable(false);
     }
 
     private void createGUI() {
-        setLayout(new MigLayout("flowy"));
-        JPanel panel = new JPanel(new MigLayout());
+        setLayout(new MigLayout("flowy", "fill, grow"));
+        JPanel panel = new JPanel(new MigLayout("fillx, wrap 2", "[][fill, grow]"));
 
         panel.add(new JLabel("Starting number:"));
         panel.add(startField);
         add(panel);
 
         JButton cancelButton = new JButton("Abort");
-        cancelButton.addActionListener(e -> dispatchEvent(new WindowEvent(Move.this, WindowEvent.WINDOW_CLOSING)));
+        cancelButton.addActionListener(e -> new AcClose(Move.this));
         CmdPanel cmdPanel = new CmdPanel(this.getRootPane(), moveButton, cancelButton);
         add(cmdPanel);
+
+        getRootPane()
+                .getActionMap().put("exitAction", new AcClose(this));
+        getRootPane()
+                .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "exitAction");
     }
 
     @Override
     public void setVisible(boolean visible) {
         if (visible) {
             startField.setText("");
+            setLocationRelativeTo(owner);
         }
         super.setVisible(visible);
     }

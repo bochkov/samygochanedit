@@ -16,6 +16,7 @@ public abstract class ChanTableModel0 extends AbstractTableModel implements Chan
     @Override
     public void applyTo(JTable table) {
         table.setModel(this);
+        table.getColumnModel().getColumn(1).setMinWidth(200); // name column
         ChanRowSorter<ChanTableModel> rowSorter = new ChanRowSorter<>(this);
         table.setRowSorter(rowSorter);
         fireTableDataChanged();

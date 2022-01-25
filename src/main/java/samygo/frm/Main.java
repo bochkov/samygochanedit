@@ -158,7 +158,7 @@ public final class Main extends JFrame {
         statusLabel.setText("Version: " + props.version() + " started with scmVersion: " + props.getScmVersion());
 
         if (Desktop.getDesktop().isSupported(Desktop.Action.APP_ABOUT))
-            Desktop.getDesktop().setAboutHandler(e -> commands.get("acAbout"));
+            Desktop.getDesktop().setAboutHandler(e -> commands.get("acAbout").actionPerformed(null));
         if (Desktop.getDesktop().isSupported(Desktop.Action.APP_QUIT_STRATEGY))
             Desktop.getDesktop().setQuitStrategy(QuitStrategy.CLOSE_ALL_WINDOWS);
     }

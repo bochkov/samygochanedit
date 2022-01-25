@@ -1,8 +1,11 @@
 package samygo.frm;
 
 import java.awt.*;
+import java.awt.desktop.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.swing.*;
@@ -50,6 +53,8 @@ public final class Main extends JFrame {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setTitle("SamyGO Channel Editor " + props.version());
         setLayout(new MigLayout("wrap, fill, insets 5", "fill, grow", "[][fill, grow][]"));
+        if (Taskbar.getTaskbar().isSupported(Taskbar.Feature.ICON_IMAGE))
+            Taskbar.getTaskbar().setIconImage(Images.FUNNY_LOGO.getImage());
     }
 
     @PostConstruct
@@ -122,8 +127,15 @@ public final class Main extends JFrame {
         mainTable.setShowGrid(true);
         mainTable.setRowSelectionAllowed(true);
         mainTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        // TODO drag'n'drop
+        // TODO drag'n'drop text & files
         mainTable.setSelectionModel(new UseTableSelectionModel(commands, modeKeep));
+        mainTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2)
+                    commands.get("chanEdit").actionPerformed(null);
+            }
+        });
 
         JPanel statusPanel = new JPanel(new MigLayout("fillx, wrap 2, insets 0", "fill, grow"));
         statusLabel.setText("Ready.");
@@ -144,6 +156,11 @@ public final class Main extends JFrame {
 
         commands.get("newCable").actionPerformed(null); // set model into table
         statusLabel.setText("Version: " + props.version() + " started with scmVersion: " + props.getScmVersion());
+
+        if (Desktop.getDesktop().isSupported(Desktop.Action.APP_ABOUT))
+            Desktop.getDesktop().setAboutHandler(e -> commands.get("acAbout"));
+        if (Desktop.getDesktop().isSupported(Desktop.Action.APP_QUIT_STRATEGY))
+            Desktop.getDesktop().setQuitStrategy(QuitStrategy.CLOSE_ALL_WINDOWS);
     }
 
     @Override

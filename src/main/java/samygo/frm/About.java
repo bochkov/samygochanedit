@@ -48,9 +48,9 @@ public final class About extends JDialog implements Frm {
     public About(JFrame owner, AppProps props) {
         super(owner, "About SamyGO ChanEdit", ModalityType.APPLICATION_MODAL);
         this.owner = owner;
-        setLayout(new MigLayout("debug, fillx, flowy", "fill, grow", "[]25[]"));
+        setLayout(new MigLayout("fillx, flowy", "fill, grow", "[]25[]"));
 
-        JPanel txtPanel = new JPanel(new MigLayout("flowy, fillx", "fill, grow"));
+        JPanel txtPanel = new JPanel(new MigLayout("flowy, fillx, insets 0", "fill, grow"));
         txtPanel.add(new JLabel(Images.FUNNY_LOGO));
         txtPanel.add(new JLabel(String.format(MESSAGE, props.version(), props.series())));
         txtPanel.add(new JLinkLabel("More information", open("http://www.ullrich.es/job/sendersortierung/samsung-samygo/")));
@@ -58,9 +58,9 @@ public final class About extends JDialog implements Frm {
         txtPanel.add(new JLinkLabel("GitHub", open("https://github.com/bochkov/samygochanedit")));
         txtPanel.add(new JLabel(LICENSE));
 
-        JButton okBtn = new JButton("OK");
+        JButton okBtn = new JButton(new AcClose(this));
+        okBtn.setText("OK");
         okBtn.setMnemonic('O');
-        okBtn.addActionListener(e -> new AcClose(About.this));
         JPanel cmdPanel = new CmdPanel(this.getRootPane(), okBtn);
         cmdPanel.add(okBtn);
 

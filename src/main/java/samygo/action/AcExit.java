@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public final class AcExit extends AbstractAction implements Command {
 
     public AcExit() {
-        super("&Quit");
+        super("E&xit");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package samygo;
 
+import java.awt.*;
 import javax.swing.*;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -10,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import samygo.frm.Main;
 import samygo.infra.AppProps;
+import samygo.ui.Images;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan

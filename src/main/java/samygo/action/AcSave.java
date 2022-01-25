@@ -34,6 +34,7 @@ public final class AcSave extends AbstractAction implements Command, FilesListen
                 LOG.info("File {} saved.", props.getChanFile());
             } catch (IOException ex) {
                 LOG.warn(ex.getMessage());
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

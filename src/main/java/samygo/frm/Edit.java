@@ -144,7 +144,7 @@ public final class Edit extends JDialog implements EditFrm {
         add(specPanel);
         // endregion
         // region cmd
-        JButton cancelButton = new JButton("Abort");
+        JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> dispatchEvent(new WindowEvent(Edit.this, WindowEvent.WINDOW_CLOSING)));
         CmdPanel cmdPanel = new CmdPanel(this.getRootPane(), okButton, cancelButton);
         add(cmdPanel);

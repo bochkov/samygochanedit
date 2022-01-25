@@ -70,10 +70,12 @@ public final class ScmExtractor {
         char version = cloneMatcher.find() ?
                 cloneMatcher.group(1).charAt(0) :
                 ' ';
-        if (version == ' ')
+        if (version == ' ') {
             LOG.info("No TV Version info found in file {}", cloneFile);
-        else {
-            LOG.info("Read TV Version: " + version + " from file " + cloneFile);
+            statusLabel.setText("No TV Version info found in file " + cloneFile);
+        } else {
+            LOG.info("Read TV Version: {} from file {}", version, cloneFile);
+            statusLabel.setText("Read TV Version: " + version + " from file " + cloneFile);
             props.setScmVersion(version);
         }
         return i;

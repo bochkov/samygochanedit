@@ -9,18 +9,9 @@ import javax.swing.*;
 public final class JLinkLabel extends JLabel {
 
     private static final Color ENABLED_COLOR = new Color(0, 0, 207);
-    private static final Color WARNING_COLOR = new Color(219, 71, 71);
     private static final Color DISABLED_COLOR = UIManager.getColor("Label.disabledForeground");
 
     private String innerText;
-
-    public JLinkLabel(String text) {
-        this(text, null);
-    }
-
-    public JLinkLabel(Action action) {
-        this((String) action.getValue(Action.NAME), action);
-    }
 
     public JLinkLabel(String text, ActionListener listener) {
         setText(text);
@@ -39,22 +30,6 @@ public final class JLinkLabel extends JLabel {
                         isEnabled() ?
                                 HexColor.asString(ENABLED_COLOR) :
                                 HexColor.asString(DISABLED_COLOR),
-                        innerText
-                )
-        );
-    }
-
-    public String innerText() {
-        return innerText;
-    }
-
-    public void setWarning(boolean warning) {
-        super.setText(
-                String.format(
-                        "<html><font color=\"%s\"><u>%s</u></font></html>",
-                        warning ?
-                                HexColor.asString(WARNING_COLOR) :
-                                HexColor.asString(ENABLED_COLOR),
                         innerText
                 )
         );
@@ -101,7 +76,7 @@ public final class JLinkLabel extends JLabel {
         listenerList.remove(ActionListener.class, actionListener);
     }
 
-    protected void fireActionPerformed(ActionEvent e) {
+    private void fireActionPerformed(ActionEvent e) {
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i += 2) {
             if (listeners[i] == ActionListener.class) {

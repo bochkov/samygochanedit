@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,8 @@ public final class AcSaveAs extends AcOpenSave implements FilesListener {
 
     @Autowired
     private ChannelServResolve channels;
+    @Autowired
+    private JLabel statusLabel;
 
     public AcSaveAs(AppProps props) {
         super("Save As...");
@@ -35,8 +39,10 @@ public final class AcSaveAs extends AcOpenSave implements FilesListener {
                 try {
                     channels.service().writeTo(file);
                     LOG.info("File saved as: {}", file);
+                    statusLabel.setText("File saved as: " + file);
                 } catch (IOException ex) {
                     LOG.warn(ex.getMessage());
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

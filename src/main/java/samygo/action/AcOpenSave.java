@@ -29,15 +29,6 @@ public abstract class AcOpenSave extends AbstractAction implements Command {
                 null;
     }
 
-    protected String extensionOf(File file) {
-        String fileName = file.getName();
-        int i = fileName.lastIndexOf('.');
-        if (i > 0 && i < fileName.length() - 1) {
-            return fileName.substring(i + 1).toLowerCase();
-        }
-        return "";
-    }
-
     /**
      * File Dialog to select a file for writing
      * @param message displayed for selection

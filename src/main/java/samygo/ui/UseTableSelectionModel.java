@@ -14,7 +14,7 @@ public final class UseTableSelectionModel extends DefaultListSelectionModel {
 
     public UseTableSelectionModel(Map<String, Command> commands, ModeKeep modeKeep) {
         addListSelectionListener(e -> {
-            LOG.info("{}", e);
+            LOG.debug("{}", e);
             if (e.getValueIsAdjusting())
                 return;
             boolean selected = !isSelectionEmpty();

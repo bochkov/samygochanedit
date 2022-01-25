@@ -17,7 +17,7 @@ public final class DefaultModeKeep implements ModeKeep {
 
     @PostConstruct
     public void updateLabel() {
-        this.modeLabel.setText(mode.get().labelText());
+        this.modeLabel.setText("Mode: " + mode.get().description());
     }
 
     @Override

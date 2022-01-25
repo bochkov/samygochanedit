@@ -48,8 +48,8 @@ public final class Move extends JDialog implements Frm {
         panel.add(startField);
         add(panel);
 
-        JButton cancelButton = new JButton("Abort");
-        cancelButton.addActionListener(e -> new AcClose(Move.this));
+        JButton cancelButton = new JButton(new AcClose(this));
+        cancelButton.setText("Cancel");
         CmdPanel cmdPanel = new CmdPanel(this.getRootPane(), moveButton, cancelButton);
         add(cmdPanel);
 
@@ -89,6 +89,8 @@ public final class Move extends JDialog implements Frm {
         private void actionPerformed() throws IllegalArgumentException {
             if (servResolve.service().selectedChannel() == null)
                 throw new IllegalArgumentException("channel not selected");
+            if (startField.getText().isEmpty())
+                return;
 
             int targetNumber = Integer.parseInt(startField.getText());
             ChannelService serv = servResolve.service();

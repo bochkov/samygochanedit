@@ -1,7 +1,7 @@
 package samygo.frm;
 
 import java.awt.*;
-import java.awt.desktop.*;
+import java.awt.desktop.QuitStrategy;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -28,9 +28,12 @@ import samygo.ui.*;
 @Component
 public final class Main extends JFrame {
 
-    private static final int WIDTH = 820;
-    private static final int HEIGHT = 500;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 700;
     private static final int META_KEY = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+    private static final KeyStroke DEL_KEY = System.getProperty("os.name").toLowerCase().contains("mac") ?
+            KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0) :
+            KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
 
     private final AppProps props;
 
@@ -83,7 +86,7 @@ public final class Main extends JFrame {
                                 new HMenuItem("---"),
                                 new HMenuItem(commands.get("chanEdit"), KeyStroke.getKeyStroke(KeyEvent.VK_E, META_KEY)),
                                 new HMenuItem(commands.get("chanMove"), KeyStroke.getKeyStroke(KeyEvent.VK_M, META_KEY)),
-                                new HMenuItem(commands.get("chanDel"), KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0)),
+                                new HMenuItem(commands.get("chanDel"), DEL_KEY),
                                 new HMenuItem("---"),
                                 new HMenuItem(commands.get("chanFavAdd"), KeyStroke.getKeyStroke(KeyEvent.VK_UP, META_KEY)),
                                 new HMenuItem(commands.get("chanFavDel"), KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, META_KEY)),

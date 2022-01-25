@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.SortedMap;
-
 import javax.swing.*;
 
 import lombok.extern.slf4j.Slf4j;

@@ -16,16 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 public final class AppProps {
 
-    private static final String VERSION = "v0.54cd";
+    private static final String VERSION = "v0.5";
     private static final String SERIES = "C and D-Series";
 
     @ToString.Exclude
     private final List<FilesListener> filesListeners = new ArrayList<>();
 
-    private File tempDir = new File(System.getProperty("user.dir"), "SamyGoTemp");
+    private File tempDir;
     private File chanFile;
     private File scmFile;
-    private char scmVersion = 'C';
+    private char scmVersion = 'D';
 
     private File currDir = new File(System.getProperty("user.dir"));
 

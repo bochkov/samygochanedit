@@ -27,7 +27,9 @@ public final class ChanEdit extends AbstractAction implements Command {
     @Override
     public void actionPerformed(ActionEvent e) {
         Channel channel = servResolve.service().selectedChannel();
-        editFrm.workWith(channel);
-        editFrm.setVisible(true);
+        if (channel != null) {
+            editFrm.workWith(channel);
+            editFrm.setVisible(true);
+        }
     }
 }

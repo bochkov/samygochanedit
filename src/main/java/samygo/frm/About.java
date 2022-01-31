@@ -53,7 +53,6 @@ public final class About extends JDialog implements Frm {
         JPanel txtPanel = new JPanel(new MigLayout("flowy, fillx, insets 0", "fill, grow"));
         txtPanel.add(new JLabel(Images.FUNNY_LOGO));
         txtPanel.add(new JLabel(String.format(MESSAGE, props.version(), props.series())));
-        txtPanel.add(new JLinkLabel("More information", open("http://www.ullrich.es/job/sendersortierung/samsung-samygo/")));
         txtPanel.add(new JLinkLabel("Source Code", open("https://sourceforge.net/projects/samygochanedit/")));
         txtPanel.add(new JLinkLabel("GitHub", open("https://github.com/bochkov/samygochanedit")));
         txtPanel.add(new JLabel(LICENSE));

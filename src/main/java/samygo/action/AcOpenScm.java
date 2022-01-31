@@ -74,7 +74,7 @@ public final class AcOpenScm extends AcOpenSave {
         servResolve.service().replaceWith(channels.values());
         /* save chanFile for later */
         props.setChanFile(chanFile);
-        LOG.info("Finished opening file: {}", props.getChanFile());
-        statusLabel.setText("Finished opening file: " + props.getChanFile());
+        LOG.info("Finished opening file: {}", props.getScmFile());
+        statusLabel.setText("Finished opening file: " + props.getScmFile());
     }
 }

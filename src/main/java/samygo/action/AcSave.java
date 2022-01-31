@@ -19,6 +19,8 @@ public final class AcSave extends AbstractAction implements Command, FilesListen
 
     @Autowired
     private ChannelServResolve channels;
+    @Autowired
+    private JLabel statusLabel;
 
     public AcSave(AppProps props) {
         super("Save");
@@ -32,6 +34,7 @@ public final class AcSave extends AbstractAction implements Command, FilesListen
             try {
                 channels.service().writeTo(props.getChanFile());
                 LOG.info("File {} saved.", props.getChanFile());
+                statusLabel.setText("File " + props.getChanFile() + " saved.");
             } catch (IOException ex) {
                 LOG.warn(ex.getMessage());
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

@@ -103,9 +103,6 @@ public final class Main extends JFrame {
                                 new HMenuItem(commands.get("chanFav794"), KeyStroke.getKeyStroke(KeyEvent.VK_4, META_KEY | InputEvent.SHIFT_DOWN_MASK))
                         ),
                         new HMenu("&Help",
-                                new HMenuItem(commands.get("helpOnline")),
-                                new HMenuItem(commands.get("helpForum")),
-                                new HMenuItem("---"),
                                 new HMenuItem(commands.get("acAbout"))
                         )
                 )

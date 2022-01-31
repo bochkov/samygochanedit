@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import samygo.infra.Mode;
 import samygo.infra.ModeKeep;
@@ -16,12 +16,11 @@ import samygo.model.CloneChannel;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public final class CloneParser extends AbstractChannelParser {
 
-    @Autowired
-    private ModeKeep modeKeep;
-    @Autowired
-    private RawKeep rawKeep;
+    private final ModeKeep modeKeep;
+    private final RawKeep rawKeep;
 
     @Override
     public boolean canParse(File file) {

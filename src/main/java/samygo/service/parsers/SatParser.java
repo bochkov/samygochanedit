@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import samygo.infra.AppProps;
 import samygo.infra.Mode;
@@ -17,10 +17,10 @@ import samygo.model.SatChannelD;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public final class SatParser extends AbstractChannelParser {
 
-    @Autowired
-    private AppProps props;
+    private final AppProps props;
 
     @Override
     public boolean canParse(File file) {

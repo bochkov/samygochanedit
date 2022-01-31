@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.SortedMap;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import samygo.infra.AppProps;
 import samygo.infra.Mode;
@@ -18,10 +18,10 @@ import samygo.model.SatChannelD;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public final class SatWriter implements MapChannelWriter {
 
-    @Autowired
-    private AppProps props;
+    private final AppProps props;
 
     @Override
     public boolean canWrite(Mode mode) {
@@ -41,7 +41,6 @@ public final class SatWriter implements MapChannelWriter {
                 out.write(chan.writeData(), 0, recordLen);
             }
         }
-        // todo status update
         LOG.info("Channel list written to file: {}", file);
     }
 }

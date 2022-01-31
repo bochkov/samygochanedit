@@ -15,23 +15,15 @@ public abstract class AbstractChannelParser implements MapChannelParser {
     protected int convertEndianess(byte b, byte c) {
         int lower = b;
         int upper = c;
-        if (b < 0) lower += 256;
-        if (c < 0) upper += 256;
+        if (b < 0)
+            lower += 256;
+        if (c < 0)
+            upper += 256;
         return lower + (upper << 8);
     }
 
     /** read bytes, so we are binary safe */
     protected byte[] getFileContentsAsBytes(File file) throws IOException {
         return Files.readAllBytes(file.toPath());
-        /*
-        byte[] data = new byte[(int) file.length()];
-        try (InputStream fis = new FileInputStream(file)) {
-            int read = fis.read(data);
-            LOG.debug("read {} bytes", read);
-        }
-        return data;
-         */
     }
-
-
 }

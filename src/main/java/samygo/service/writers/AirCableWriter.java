@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.SortedMap;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import samygo.infra.AppProps;
 import samygo.infra.Mode;
@@ -18,10 +18,10 @@ import samygo.model.Channel;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public final class AirCableWriter implements MapChannelWriter {
 
-    @Autowired
-    private AppProps props;
+    private final AppProps props;
 
     @Override
     public boolean canWrite(Mode mode) {
@@ -44,14 +44,13 @@ public final class AirCableWriter implements MapChannelWriter {
                 out.write(chan.writeData(), 0, recordLen);
                 ++entries;
             }
-            // TODO test if fillup to 1000 records is still needed
+            // TODO test if fill up to 1000 records is still needed
             byte[] rawData = new byte[recordLen];
             while (entries < 999) {
                 out.write(rawData, 0, recordLen); // write data into the file
                 entries++;
             }
         }
-        // TODO status update
         LOG.info("Channel list written to file: {}", file);
     }
 }

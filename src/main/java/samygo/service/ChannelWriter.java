@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.SortedMap;
+import javax.swing.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,12 +18,15 @@ public final class ChannelWriter {
     @Autowired
     private ModeKeep modeKeep;
     @Autowired
+    private JLabel statusLabel;
+    @Autowired
     private List<MapChannelWriter> writers;
 
     public void write(SortedMap<Integer, Channel> channels, File file) throws IOException {
         for (MapChannelWriter writer : writers) {
             if (writer.canWrite(modeKeep.currentMode())) {
                 writer.write(channels, file);
+                statusLabel.setText("Channel list written to file: " + file);
                 break;
             }
         }

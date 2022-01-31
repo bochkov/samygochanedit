@@ -7,8 +7,8 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.SortedMap;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import samygo.infra.Mode;
 import samygo.infra.RawKeep;
@@ -17,10 +17,10 @@ import samygo.model.CloneChannel;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public final class CloneWriter implements MapChannelWriter {
 
-    @Autowired
-    private RawKeep rawKeep;
+    private final RawKeep rawKeep;
 
     @Override
     public boolean canWrite(Mode mode) {
@@ -81,7 +81,6 @@ public final class CloneWriter implements MapChannelWriter {
             // write bytes 0x14F59 - 0x1C390 out, nothing has changed there
             out.write(rawKeep.get(), 0x14F59, 0x74A7);
         }
-        // todo status update
         LOG.info("Channel list written to file: {}", file);
     }
 

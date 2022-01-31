@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import samygo.infra.AppProps;
 import samygo.infra.Mode;
@@ -19,10 +19,10 @@ import samygo.model.Channel;
  * detects Cable Channel-list based on Frequency different zero
  */
 @Component
+@RequiredArgsConstructor
 public final class AirCableParser extends AbstractChannelParser {
 
-    @Autowired
-    private AppProps props;
+    private final AppProps props;
 
     @Override
     public boolean canParse(File file) {

@@ -25,7 +25,7 @@ public abstract class TreeChannels implements ChannelService {
 
     @Override
     public Channel selectedChannel() {
-        int row = table.getSelectedRow();
+        int row = table.convertRowIndexToModel(table.getSelectedRow());
         return row < 0 ?
                 null :
                 model().get(row);

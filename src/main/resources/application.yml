@@ -1,2 +1,5 @@
 samygo:
   temp-dir: temp
+spring:
+  profiles:
+    active: production

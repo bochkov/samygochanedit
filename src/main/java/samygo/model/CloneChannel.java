@@ -9,6 +9,6 @@ public class CloneChannel extends Channel {
 
     public int nid = -1;
     public int freq = -1;
-    // public byte flags	= 0x00;
+    // public byte flags = 0x00;
 
 }

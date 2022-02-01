@@ -11,6 +11,7 @@ import javax.swing.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import samygo.model.Channel;
+import samygo.service.ChannelCreator;
 import samygo.service.ChannelWriter;
 
 @Slf4j
@@ -20,6 +21,8 @@ public abstract class TreeChannels implements ChannelService {
     private JTable table;
     @Autowired
     private ChannelWriter writer;
+    @Autowired
+    private ChannelCreator channelCreator;
 
     protected final SortedMap<Integer, Channel> channels = new TreeMap<>();
 
@@ -53,8 +56,8 @@ public abstract class TreeChannels implements ChannelService {
     }
 
     @Override
-    public SortedMap<Integer, Channel> removeAfter(int idx) {
-        SortedMap<Integer, Channel> tailMap = new TreeMap<>(channels.tailMap(idx));
+    public SortedMap<Integer, Channel> removeAfter(Channel chan) {
+        SortedMap<Integer, Channel> tailMap = new TreeMap<>(channels.tailMap(chan.num));
         for (Channel channel : tailMap.values()) {
             channels.remove(channel.num);
         }
@@ -133,5 +136,55 @@ public abstract class TreeChannels implements ChannelService {
         }
         model().setAll(this.channels.values());
         model().applyTo(table);
+    }
+
+    @Override
+    public void moveSelected(int targetNumber) {
+        Channel[] selected = selectedChannels();
+        move(selected, targetNumber);
+    }
+
+    @Override
+    public void move(Channel[] channels, int targetNumber) {
+        Channel targetChan = get(targetNumber);
+        if (targetChan != null) {
+            move(channels, targetChan);
+        } else {
+            Channel dummy = channelCreator.create();
+            dummy.name = "DUMMY";
+            dummy.num = targetNumber;
+            add(dummy);
+            move(channels, dummy);
+            remove(dummy);
+        }
+    }
+
+    private void move(Channel[] channels, Channel after) {
+        int cIndex = after.num;
+        // first delete all the channels to be moved from list
+        for (Channel select : channels)
+            remove(select);
+
+        // then delete all channels after targetChan.num from list
+        SortedMap<Integer, Channel> removed = removeAfter(after);
+
+        // now read them at targetChannel.num, targetChannel might have moved up
+        // read everything with new channel number
+        for (Channel channel : channels) {
+            channel.num = cIndex;
+            add(channel);
+            cIndex++;
+        }
+
+        // after that all other channels, only renumbering if we have to (mind the gap!)
+        for (Channel ch : removed.values()) {
+            if (exists(ch)) { // channel number already used, give it a new one
+                ch.num = cIndex;
+                add(ch);
+                cIndex++;
+            } else {
+                add(ch);  // we hit a gap, just keep the numbers from now on
+            }
+        }
     }
 }

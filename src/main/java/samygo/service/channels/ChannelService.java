@@ -25,7 +25,7 @@ public interface ChannelService {
 
     void remove(Channel ch);
 
-    SortedMap<Integer, Channel> removeAfter(int idx);
+    SortedMap<Integer, Channel> removeAfter(Channel chan);
 
     Channel get(int key);
 
@@ -34,5 +34,9 @@ public interface ChannelService {
     void replaceWith(Collection<Channel> channels);
 
     ChanTableModel model();
+
+    void move(Channel[] channels, int target);
+
+    void moveSelected(int target);
 
 }

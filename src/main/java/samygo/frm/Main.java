@@ -47,6 +47,8 @@ public final class Main extends JFrame {
     private JLabel statusLabel;
     @Autowired
     private ModeKeep modeKeep;
+    @Autowired
+    private TableTransfer tableTransfer;
 
     public Main(@Autowired AppProps props) {
         this.props = props;
@@ -128,6 +130,9 @@ public final class Main extends JFrame {
         mainTable.setRowSelectionAllowed(true);
         mainTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         // TODO drag'n'drop text & files
+        mainTable.setDragEnabled(true);
+        mainTable.setDropMode(DropMode.INSERT_ROWS);
+        mainTable.setTransferHandler(tableTransfer);
         mainTable.setSelectionModel(new UseTableSelectionModel(commands, modeKeep));
         mainTable.addMouseListener(new MouseAdapter() {
             @Override

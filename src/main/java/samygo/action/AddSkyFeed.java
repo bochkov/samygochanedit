@@ -4,14 +4,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import samygo.infra.ChannelServResolve;
 import samygo.infra.Mode;
 import samygo.infra.ModeKeep;
 import samygo.model.Channel;
 import samygo.model.CloneChannel;
 
-@Component
+@Deprecated
 public final class AddSkyFeed extends AbstractAction implements Command {
 
     @Autowired

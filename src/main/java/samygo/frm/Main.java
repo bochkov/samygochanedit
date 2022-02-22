@@ -94,9 +94,9 @@ public final class Main extends JFrame {
                                 new HMenuItem(commands.get("chanFavDel"), KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, META_KEY)),
                                 new HMenuItem("---"),
                                 new HMenuItem(commands.get("chanLockAdd"), KeyStroke.getKeyStroke(KeyEvent.VK_UP, META_KEY | InputEvent.ALT_DOWN_MASK)),
-                                new HMenuItem(commands.get("chanLockDel"), KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, META_KEY | InputEvent.ALT_DOWN_MASK)),
-                                new HMenuItem("---"),
-                                new HMenuItem(commands.get("addSkyFeed"))
+                                new HMenuItem(commands.get("chanLockDel"), KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, META_KEY | InputEvent.ALT_DOWN_MASK))
+//                                new HMenuItem("---"),
+//                                new HMenuItem(commands.get("addSkyFeed"))
                         ),
                         new HMenu("&Fav79",
                                 new HMenuItem(commands.get("chanFav791"), KeyStroke.getKeyStroke(KeyEvent.VK_1, META_KEY | InputEvent.SHIFT_DOWN_MASK)),

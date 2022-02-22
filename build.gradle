@@ -24,7 +24,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'com.miglayout:miglayout-swing:11.0'
-    implementation 'com.formdev:flatlaf:2.0'
+    implementation 'com.formdev:flatlaf:2.0.1'
 
     compileOnly 'org.projectlombok:lombok'
 

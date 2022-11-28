@@ -7,11 +7,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import net.miginfocom.swing.MigLayout;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,10 @@ import samygo.action.Command;
 import samygo.infra.AppProps;
 import samygo.infra.ModeKeep;
 import samygo.ui.*;
+import sb.bdev.ui.swing.HMenu;
+import sb.bdev.ui.swing.HMenuBar;
+import sb.bdev.ui.swing.HMenuItem;
+import sb.bdev.ui.swing.HPopupMenu;
 
 /**
  * The Main class does create the application and controls all interaction

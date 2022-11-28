@@ -1,13 +1,13 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
-    id 'org.springframework.boot' version '2.7.5'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
 }
 
 group = 'com.sb'
-version = '0.5'
+version = '0.6'
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
@@ -19,12 +19,16 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://maven.sergeybochkov.com/releases"
+    }
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'com.miglayout:miglayout-swing:11.0'
     implementation 'com.formdev:flatlaf:2.6'
+    implementation 'com.sb:bdev-rt:1.0.3.RELEASE'
 
     compileOnly 'org.projectlombok:lombok'
 

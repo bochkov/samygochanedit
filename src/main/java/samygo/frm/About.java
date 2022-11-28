@@ -11,9 +11,10 @@ import net.miginfocom.swing.MigLayout;
 import org.springframework.stereotype.Component;
 import samygo.action.AcClose;
 import samygo.infra.AppProps;
-import samygo.ui.CmdPanel;
 import samygo.ui.Images;
-import samygo.ui.JLinkLabel;
+import sb.bdev.ui.HotKey;
+import sb.bdev.ui.common.CmdPanel;
+import sb.bdev.ui.common.JLinkLabel;
 
 @Slf4j
 @Component
@@ -69,12 +70,7 @@ public final class About extends JDialog implements Frm {
         pack();
         setResizable(false);
         setLocationRelativeTo(this.owner);
-
-        getRootPane()
-                .getActionMap().put("exitAction", new AcClose(this));
-        getRootPane()
-                .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "exitAction");
+        HotKey.escBy(getRootPane(), new AcClose(this));
     }
 
     @Override

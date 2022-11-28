@@ -1,7 +1,6 @@
 package samygo.frm;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.util.Map;
 import javax.swing.*;
@@ -18,7 +17,8 @@ import samygo.model.Channel;
 import samygo.model.CloneChannel;
 import samygo.model.SatChannel;
 import samygo.service.channels.ChannelService;
-import samygo.ui.CmdPanel;
+import sb.bdev.ui.HotKey;
+import sb.bdev.ui.common.CmdPanel;
 
 @Slf4j
 @Component
@@ -71,12 +71,7 @@ public final class Edit extends JDialog implements EditFrm {
         pack();
         setLocationRelativeTo(this.owner);
         setResizable(false);
-
-        getRootPane()
-                .getActionMap().put("exitAction", new AcClose(this));
-        getRootPane()
-                .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "exitAction");
+        HotKey.escBy(getRootPane(), new AcClose(this));
     }
 
     private void createGUI() {
@@ -144,8 +139,7 @@ public final class Edit extends JDialog implements EditFrm {
         add(specPanel);
         // endregion
         // region cmd
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(e -> dispatchEvent(new WindowEvent(Edit.this, WindowEvent.WINDOW_CLOSING)));
+        JButton cancelButton = new JButton(new DoCancel("Cancel"));
         CmdPanel cmdPanel = new CmdPanel(this.getRootPane(), okButton, cancelButton);
         add(cmdPanel);
         // endregion
@@ -238,6 +232,18 @@ public final class Edit extends JDialog implements EditFrm {
             setLocationRelativeTo(owner);
         }
         super.setVisible(b);
+    }
+
+    private final class DoCancel extends AbstractAction {
+
+        public DoCancel(String text) {
+            super(text);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispatchEvent(new WindowEvent(Edit.this, WindowEvent.WINDOW_CLOSING));
+        }
     }
 
     private final class DoEdit extends AbstractAction {
@@ -339,6 +345,8 @@ public final class Edit extends JDialog implements EditFrm {
                         LOG.warn("Cannot get number representation " + ex.getMessage());
                         return;
                     }
+                }
+                case CLONE -> {
                 }
             }
 

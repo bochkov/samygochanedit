@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 public final class AppProps {
 
-    private static final String VERSION = "v0.5";
+    private static final String VERSION = "v0.6";
     private static final String SERIES = "C and D-Series";
 
     @ToString.Exclude
